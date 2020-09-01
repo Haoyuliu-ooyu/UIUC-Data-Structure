@@ -61,9 +61,19 @@ PNG grayscale(PNG image) {
  * @return The image with a spotlight.
  */
 PNG createSpotlight(PNG image, int centerX, int centerY) {
-
+  for (unsigned x = 0; x < image.width(); x++) {
+    for (unsigned y = 0; y < image.height(); y++) {
+      HSLAPixel & pixel = image.getPixel(x, y);
+      unsigned diff = std::sqrt(std::pow((x - centerX), 2) + std::pow((y - centerY), 2));
+      if (diff < 160) {
+        pixel.l = pixel.l * (1 - diff * 0.005);
+      } else {
+        pixel.l = pixel.l * 0.2;
+      }
+    }
+  }
   return image;
-  
+
 }
  
 
@@ -78,7 +88,16 @@ PNG createSpotlight(PNG image, int centerX, int centerY) {
  * @return The illinify'd image.
 **/
 PNG illinify(PNG image) {
-
+  for (unsigned x = 0; x < image.width(); x++) {
+    for (unsigned y = 0; y < image.height(); y++) {
+      HSLAPixel & pixel = image.getPixel(x, y);
+      if (pixel.h >= 102.5 && pixel.h <= 288.5) {
+        pixel.h = 216;
+      } else {
+        pixel.h = 11;
+      }
+    }
+  }
   return image;
 }
  
@@ -96,6 +115,20 @@ PNG illinify(PNG image) {
 * @return The watermarked image.
 */
 PNG watermark(PNG firstImage, PNG secondImage) {
+  for (unsigned x = 0; x < firstImage.width(); x++) {
+    for (unsigned y = 0; y < firstImage.height(); y++) {
+      HSLAPixel & pixel1 = firstImage.getPixel(x, y);
+      HSLAPixel & pixel2 = secondImage.getPixel(x, y);
+      if (pixel2.l == 1) {
+        if ((pixel1.l + 0.2) < 1) {
+          pixel1.l = pixel1.l + 0.2;
+        } else {
+          pixel1.l = 1;
+        }
+      }
+    }
+  }
+
 
   return firstImage;
 }
