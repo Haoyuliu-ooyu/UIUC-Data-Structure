@@ -64,7 +64,7 @@ PNG createSpotlight(PNG image, int centerX, int centerY) {
   for (unsigned x = 0; x < image.width(); x++) {
     for (unsigned y = 0; y < image.height(); y++) {
       HSLAPixel & pixel = image.getPixel(x, y);
-      unsigned diff = std::sqrt(std::pow((x - centerX), 2) + std::pow((y - centerY), 2));
+      double diff = std::sqrt(std::pow(((int)x - centerX), 2) + std::pow(((int)y - centerY), 2));
       if (diff < 160) {
         pixel.l = pixel.l * (1 - diff * 0.005);
       } else {
