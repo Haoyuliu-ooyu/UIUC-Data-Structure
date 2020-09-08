@@ -65,5 +65,13 @@ cs225::PNG myArt(unsigned int width, unsigned int height) {
       i.l = i.l * diff * (1 - 0.03);
     }
   }
+  for (unsigned x = 3 * width/4; x < width; x++) {
+    for (unsigned y = 0; y < height / 2; y++) {
+      cs225::HSLAPixel & i = png.getPixel(x, y);
+      i.h = 190;
+      i.s = 50;
+      i.l = 51;
+    }
+  }
   return png;
 }
