@@ -36,11 +36,11 @@ HSLAPixel* myFavoriteColor() {
 void sketchify(std::string inputFile, std::string outputFile) {
     // Load in.png
     PNG* original = NULL;
-
+    std::cout << "Reached line " << __LINE__ << std::endl;
     original->readFromFile(inputFile);
     unsigned width = original->width();
     unsigned height = original->height();
-
+    std::cout << "Reached line " << __LINE__ << std::endl;
     // Create out.png
     PNG* output;
     setupOutput(width, height);
