@@ -1,5 +1,4 @@
-#include <StickerSheet.h>
-#include <Image.h>
+#include "StickerSheet.h"
 
 StickerSheet::StickerSheet(const Image &picture, unsigned max) {}
     
@@ -7,7 +6,7 @@ StickerSheet::~StickerSheet() {}
 
 StickerSheet::StickerSheet(const StickerSheet &other) {}
 
-StickerSheet::const StickerSheet & operator=(const StickerSheet &other) {}
+StickerSheet::const StickerSheet& operator=(const StickerSheet &other) {}
     
 StickerSheet::void changeMaxStickers(unsigned max) {}
         
