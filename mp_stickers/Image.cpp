@@ -120,8 +120,10 @@ void Image::rotateColor(double degrees) {
       cs225::HSLAPixel & p = this->getPixel(x, y);
       if (p.h + degrees >= 360) {
         p.h = p.h + degrees - 360;
+      } else if (p.h + degrees <= 0) { 
+        p.h = p.h + degrees + 360;
       } else {
-        p.h = p.h + degrees;
+          p.h = p.h + degrees;
       }
     }
   }

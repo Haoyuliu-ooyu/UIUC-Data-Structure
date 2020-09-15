@@ -6,22 +6,19 @@ StickerSheet::~StickerSheet() {}
 
 StickerSheet::StickerSheet(const StickerSheet &other) {}
 
-StickerSheet::const StickerSheet& operator=(const StickerSheet &other) {}
+const StickerSheet& StickerSheet::operator=(const StickerSheet &other) {return other;}
     
-StickerSheet::void changeMaxStickers(unsigned max) {}
-        
-StickerSheet::int addSticker (Image &sticker, unsigned x, unsigned y) {return 1;}
-        
-StickerSheet::bool translate (unsigned index, unsigned x, unsigned y) {return true;}
-        
-StickerSheet::void removeSticker (unsigned index) {}
+void StickerSheet::changeMaxStickers(unsigned max) {}
 
-StickerSheet::Image* getSticker(unsigned index) {
-        Image* toReturn = NULL;
-        return toReturn;
-}
+int StickerSheet::addSticker (Image &sticker, unsigned x, unsigned y) {return 1;}
         
-StickerSheet::Image render () const {
-        Image toReturn = NULL;
-        return toReturn;
+bool StickerSheet::translate (unsigned index, unsigned x, unsigned y) {return true;}
+        
+void StickerSheet::removeSticker (unsigned index) {}
+
+Image* StickerSheet::getSticker(unsigned index) {return nullptr;}
+        
+Image StickerSheet::render () const {
+        Image i;
+        return i;
 }

@@ -9,11 +9,11 @@ class StickerSheet {
 
     public:
  
-        StickerSheet::StickerSheet(const Image &picture, unsigned max);
+        StickerSheet(const Image &picture, unsigned max);
     
-        StickerSheet::~StickerSheet();
+        ~StickerSheet();
     
-        StickerSheet::StickerSheet(const StickerSheet &other);
+        StickerSheet(const StickerSheet &other);
     
         const StickerSheet & operator=(const StickerSheet &other);
     
@@ -29,7 +29,5 @@ class StickerSheet {
         
         Image render () const;
 
-    private:
-        Image* Scene;
 
 };
