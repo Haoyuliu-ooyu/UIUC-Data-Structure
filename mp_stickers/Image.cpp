@@ -1,5 +1,6 @@
 #include "Image.h"
 #include "cs225/PNG.h"
+#include <cmath>
 
 void Image::lighten() {
     for (unsigned x = 0; x < this->width(); x++) {
@@ -147,7 +148,7 @@ void Image::scale(double factor) {
     for (unsigned x = 0; x < this->width()*factor; x++) {
         for (unsigned y = 0; y < this->height()*factor; y++) {
             cs225::HSLAPixel & p_scaled = scaled->getPixel(x, y);
-            cs225::HSLAPixel & p_original = this->getPixel(x/factor, y/factor);
+            cs225::HSLAPixel & p_original = this->getPixel(floor(x/factor), floor(y/factor));
             p_scaled = p_original;
         }
     }
@@ -161,25 +162,8 @@ void Image::scale(double factor) {
     }
     delete scaled;
 }
-        
+
 void Image::scale(unsigned w, unsigned h) {
-    PNG* scaled = new PNG(w, h);
-    double w_ratio = w/this->width();
-    double h_ratio = h/this->height();
-    for (unsigned x = 0; x < w; x++) {
-        for (unsigned y = 0; y < h; y++) {
-            cs225::HSLAPixel & p_scaled = scaled->getPixel(x, y);
-            cs225::HSLAPixel & p_original = this->getPixel(x/w_ratio, y/h_ratio);
-            p_scaled = p_original;
-        }
-    }
-    this->resize(w, h);
-    for (unsigned x = 0; x < w; x++) {
-        for (unsigned y = 0; y < h; y++) {
-            cs225::HSLAPixel & p_scaled = scaled->getPixel(x, y);
-            cs225::HSLAPixel & p_original = this->getPixel(x, y);
-            p_original = p_scaled;
-        }
-    }
-    delete scaled;
+    double factor = std::min((double)w/this->width(), (double)h/this->height());
+    this->Image::scale(factor);
 }
