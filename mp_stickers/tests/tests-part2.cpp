@@ -66,13 +66,12 @@ TEST_CASE("StickerSheet::changeMaxStickers() can increase the number of stickers
 
   StickerSheet sheet(alma, 1);
   sheet.addSticker(i, 20, 200);
-
   sheet.changeMaxStickers(2);
   sheet.addSticker(i, 40, 200);
 
   Image expected;
   expected.readFromFile("tests/expected-2.png");
-
+  
   REQUIRE( sheet.render() == expected );
 }
 

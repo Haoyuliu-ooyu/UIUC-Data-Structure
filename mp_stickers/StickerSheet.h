@@ -29,5 +29,22 @@ class StickerSheet {
         
         Image render () const;
 
+        void copy(const StickerSheet &other);
+
+        void destroy();
+
+    private:
+
+        Image** Scene;
+        
+        Image* original_picture;
+
+        unsigned* xCoord;
+
+        unsigned* yCoord;
+        
+        unsigned maxNum;
+
+
 
 };

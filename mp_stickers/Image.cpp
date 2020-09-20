@@ -117,30 +117,30 @@ void Image::grayscale() {
         
 void Image::rotateColor(double degrees) {
     for (unsigned x = 0; x < this->width(); x++) {
-    for (unsigned y = 0; y < this->height(); y++) {
-      cs225::HSLAPixel & p = this->getPixel(x, y);
-      if (p.h + degrees >= 360) {
-        p.h = p.h + degrees - 360;
-      } else if (p.h + degrees <= 0) { 
-        p.h = p.h + degrees + 360;
-      } else {
-          p.h = p.h + degrees;
-      }
+        for (unsigned y = 0; y < this->height(); y++) {
+            cs225::HSLAPixel & p = this->getPixel(x, y);
+            if (p.h + degrees >= 360) {
+                p.h = p.h + degrees - 360;
+            } else if (p.h + degrees <= 0) { 
+                p.h = p.h + degrees + 360;
+            } else {
+            p.h = p.h + degrees;
+            }   
+        }   
     }
-  }
 }
         
 void Image::illinify() {
     for (unsigned x = 0; x < this->width(); x++) {
-    for (unsigned y = 0; y < this->height(); y++) {
-      cs225::HSLAPixel & p = this->getPixel(x, y);
-      if (p.h >= 102.5 && p.h <= 288.5) {
-        p.h = 216;
-      } else {
-        p.h = 11;
-      }
+        for (unsigned y = 0; y < this->height(); y++) {
+            cs225::HSLAPixel & p = this->getPixel(x, y);
+            if (p.h >= 102.5 && p.h <= 288.5) {
+                p.h = 216;
+            } else {
+                p.h = 11;
+            }
+        }
     }
-  }
 }
         
 void Image::scale(double factor) {
