@@ -1,3 +1,4 @@
+#include <cmath>
 /**
  * @file quackfun.cpp
  * This is where you will implement the required functions for the
@@ -27,11 +28,16 @@ namespace QuackFun {
  *          stack in the same state (unchanged).
  */
 template <typename T>
-T sum(stack<T>& s)
-{
-
+T sum(stack<T>& s) {
     // Your code here
-    return T(); // stub return value (0 for primitive types). Change this!
+    if (s.empty()) {
+        return T();
+    }
+    T sum0 = s.top();
+    s.pop();
+    T sumd = sum0 + sum(s);
+    s.push(sum0);
+    return sumd; // stub return value (0 for primitive types). Change this!
                 // Note: T() is the default value for objects, and 0 for
                 // primitive types
 }
@@ -53,10 +59,24 @@ T sum(stack<T>& s)
  * @param input The queue representation of a string to check for balanced brackets in
  * @return      Whether the input string had balanced brackets
  */
-bool isBalanced(queue<char> input)
-{
-
+bool isBalanced(queue<char> input) {
     // @TODO: Make less optimistic
+    stack<char> s;
+    while (!input.empty()) {
+        if (input.front() == '[') {
+            s.push(input.front());
+        } else if (input.front() == ']') {
+            if (s.empty()) {
+                return false;
+            } else {
+                s.pop();
+            }
+        }
+        input.pop();
+    }
+    if (!s.empty()) {
+        return false;
+    }
     return true;
 }
 
@@ -76,11 +96,33 @@ bool isBalanced(queue<char> input)
  * @param q A queue of items to be scrambled
  */
 template <typename T>
-void scramble(queue<T>& q)
-{
+void scramble(queue<T>& q) {
     stack<T> s;
-    // optional: queue<T> q2;
-
     // Your code here
+    unsigned size = q.size();
+    unsigned count = 1;
+    while (size != 0) {
+            unsigned min = std::min(count, size);
+            if (count %2 != 0) {
+                for (unsigned i = 0; i < min; i++) {
+                    T temp = q.front();
+                    q.pop();
+                    q.push(temp);
+                }
+            } else {
+                
+                for (unsigned i = 0; i < min; i++) {
+                    s.push(q.front());
+                    q.pop();
+                }
+                for (unsigned i = 0; i < min; i++) {
+                    q.push(s.top());
+                    s.pop();
+                }
+            }
+            size -= min;
+            count++;
+        }
+    }
 }
-}
+
