@@ -7,8 +7,8 @@ template <class T>
 List<T>::List() { 
   // @TODO: graded in MP3.1
     length_ = 0;
-    ListNode* head_ = NULL;
-    ListNode* tail_ = NULL;
+    head_ = NULL;
+    tail_ = NULL;
 }
 
 /**
@@ -38,12 +38,11 @@ typename List<T>::ListIterator List<T>::end() const {
 template <typename T>
 void List<T>::_destroy() {
   /// @todo Graded in MP3.1
-  ListNode * temp1 = head_;
-  ListNode * temp2;
-  for (int i = 0; i < length_; i++) {
-    temp2 = temp1 -> next;
-    delete temp1;
-    temp1 = temp2;
+  ListNode * temp;
+  while (head_!=NULL) {
+    temp = head_->next;
+    delete head_;
+    head_ = temp;
   }
 }
 
@@ -138,16 +137,30 @@ typename List<T>::ListNode * List<T>::split(ListNode * start, int splitPoint) {
 template <typename T>
 void List<T>::tripleRotate() {
   // @todo Graded in MP3.1
-  int real_length_ = length_-length_%3;
-  ListNode* temp1 = head_;
-  ListNode* temp0;
-  for (int i = 0; i < real_length_; i += 3) {
-    ListNode* temp2 = temp1 -> next;
-    ListNode* temp3 = temp2 -> next;
-    temp1 -> next = temp3 -> next;
-    
+  ListNode* currt_ = head_;
+  for (int i = 0; i + 2 < length_ && currt_ != NULL; i += 3) {
+    if (i == 0) {
+      head_ = head_->next;
+    }
+    ListNode* prevvvv = currt_->prev;
+    ListNode* node3 = currt_->next->next;
+    ListNode* node2 = currt_->next;
+    ListNode* node3_next = node3->next;
+    node2->prev = prevvvv;
+    node3->next = currt_;
+    currt_->prev = node3;
+    currt_->next = node3_next;
+    if (node3_next != NULL) {
+      node3_next->prev = currt_;
+    }
+    if (prevvvv != NULL) {
+      prevvvv->next = node2;
+    }
+    if (i+2==length_-1) {
+      tail_ = currt_;
+    }
+    currt_ = currt_->next;
   }
-  
 }
 
 
