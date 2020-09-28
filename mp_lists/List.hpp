@@ -39,7 +39,7 @@ template <typename T>
 void List<T>::_destroy() {
   /// @todo Graded in MP3.1
   ListNode * temp;
-  while (head_!=NULL) {
+  while (head_) {
     temp = head_->next;
     delete head_;
     head_ = temp;
