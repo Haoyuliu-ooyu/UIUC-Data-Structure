@@ -107,8 +107,16 @@ template <typename T>
 bool BinaryTree<T>::isOrderedIterative() const
 {
     // your code here
-    
-    return false;
+    Node* curr = NULL;
+    InorderTraversal<T> stack_ = InorderTraversal<T>(this->getRoot());
+    for (typename TreeTraversal<T>::Iterator i = stack_.begin(); i != stack_.end(); ++i) {
+        if (curr == NULL || curr->elem <= (*i) -> elem) {
+            curr = *i;
+        } else if (curr -> elem > (*i)->elem) {
+            return false;
+        }
+    }
+    return true;
 }
 
 /**
@@ -121,6 +129,21 @@ template <typename T>
 bool BinaryTree<T>::isOrderedRecursive() const
 {
     // your code here
-    return false;
+    Node* prev = NULL;
+    return isOrderedRecursive_helper(root, prev);
+}
+
+template <typename T>
+bool BinaryTree<T>::isOrderedRecursive_helper(Node* node, Node*& prev) const{
+    if (node != NULL) {
+        if(!isOrderedRecursive_helper(node->left, prev)) {
+            return false;
+        } else if (prev!=NULL && node->elem < prev -> elem) {
+            return false;
+        }
+        prev = node;
+        return isOrderedRecursive_helper(node->right, prev);
+    }
+    return true;
 }
 

@@ -175,6 +175,7 @@ class BinaryTree
 
         void mirror_helper(Node* subRoot);
 
+        bool isOrderedRecursive_helper(Node* node, Node*& prev) const;
 
         /**
          * Private helper function for the sorted public insert function.
