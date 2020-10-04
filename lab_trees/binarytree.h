@@ -121,6 +121,8 @@ class BinaryTree
          */
         void mirror();
 
+        
+
         /**
          * isOrdered() function iterative version
          * @return True if an in-order traversal of the tree would produce a
@@ -171,7 +173,7 @@ class BinaryTree
          */
         void printLeftToRight(const Node* subRoot) const;
 
-
+        void mirror_helper(Node* subRoot);
 
 
         /**

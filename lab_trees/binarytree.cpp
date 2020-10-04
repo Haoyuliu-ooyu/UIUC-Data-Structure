@@ -79,8 +79,23 @@ void BinaryTree<T>::printLeftToRight(const Node* subRoot) const
 void BinaryTree<T>::mirror()
 {
     //your code here
+    mirror_helper(root);
+
 }
 
+template <typename T>
+void BinaryTree<T>::mirror_helper(Node* subRoot) {
+    if (subRoot == NULL) {
+        return;
+    }
+    Node* temp = subRoot -> left;
+    subRoot -> left = subRoot ->right;
+    subRoot -> right = temp;
+
+    mirror_helper(subRoot -> left);
+    mirror_helper(subRoot -> right);
+}
+ 
 
 /**
  * isOrdered() function iterative version
@@ -92,6 +107,7 @@ template <typename T>
 bool BinaryTree<T>::isOrderedIterative() const
 {
     // your code here
+    
     return false;
 }
 
