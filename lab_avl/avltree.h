@@ -10,6 +10,7 @@
 #include <vector>
 #include <sstream>
 #include <string>
+#include <algorithm>
 
 /**
  * The AVLTree class represents a linked-memory AVL Tree.
@@ -42,8 +43,11 @@ class AVLTree
         {
         }
     };
+  
+    
 
   public:
+
     /**
      * Constructor to create an empty tree.
      */
@@ -130,6 +134,9 @@ class AVLTree
      * The root of the tree.
      */
     Node* root;
+
+    void updateHeight(Node*& node);
+    int getBalance(Node* node);
 
     /**
      * Private helper function for the public #insert function.
