@@ -45,6 +45,5 @@ private:
   double tolerance_;
   vector<vector<bool>> visited_;
   PNG image_;
-  Point start_;
   queue<Point> traversal_;
 };

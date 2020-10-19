@@ -59,14 +59,12 @@ Animation FloodFilledImage::animate(unsigned frameInterval) const {
   unsigned curr = 0;
   PNG temp = image_;
   for (unsigned i = 0; i < image_traversal.size(); i++) {
-    ColorPicker * curr_col =  color_picker[i];
-    ImageTraversal * curr_tra = image_traversal[i];
-    for (Point p : *curr_tra) {
+    for (Point p : *image_traversal[i]) {
       if (curr % frameInterval == 0) {
         animation.addFrame(temp);
       }
       HSLAPixel & t = temp.getPixel(p.x, p.y);
-      t = curr_col->getColor(p.x, p.y);
+      t = color_picker[i]->getColor(p.x, p.y);
       curr++;
     }
     animation.addFrame(temp);

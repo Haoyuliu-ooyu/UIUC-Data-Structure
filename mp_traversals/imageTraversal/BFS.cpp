@@ -26,7 +26,6 @@ using namespace std;
 BFS::BFS(const PNG & png, const Point & start, double tolerance) {  
   /** @todo [Part 1] */
   tolerance_ = tolerance;
-  start_ = start;
   image_ = png;
   traversal_.push(start);
   visited_.resize(image_.width());
@@ -36,7 +35,7 @@ BFS::BFS(const PNG & png, const Point & start, double tolerance) {
       visited_[i][j] = false;
     }
   } 
-  visited_[start_.x][start_.y] = true;
+  visited_[start.x][start.y] = true;
 }
 
 
@@ -45,8 +44,8 @@ BFS::BFS(const PNG & png, const Point & start, double tolerance) {
  */
 ImageTraversal::Iterator BFS::begin() {
   /** @todo [Part 1] */
-  BFS * new_ = new BFS(image_, start_, tolerance_);
-  return ImageTraversal::Iterator(*new_, start_);
+  BFS * new_ = new BFS(image_, traversal_.front(), tolerance_);
+  return ImageTraversal::Iterator(*new_, traversal_.front());
 }
 
 /**
