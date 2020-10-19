@@ -29,6 +29,7 @@ public:
   class Iterator : std::iterator<std::forward_iterator_tag, Point> {
   public:
     Iterator();
+    Iterator(ImageTraversal& traversal, Point start);
 
     Iterator & operator++();
     Point operator*();
@@ -40,7 +41,10 @@ public:
   private:
     /** @todo [Part 1] */
     /** add private members here if neccesary*/
-
+    ImageTraversal* traversal_;
+    Point start_;
+    Point current_;
+    bool finished;
   };
 
   /**
@@ -75,6 +79,14 @@ public:
    * Virtual function. Derived class need to implement this
    */
   virtual bool empty() const = 0;
+
+  virtual bool get_visited(unsigned x, unsigned y) = 0;
+
+  virtual void set_true(unsigned x, unsigned y) = 0;
+
+  virtual PNG* get_image() = 0;
+
+  virtual double get_tolerance() = 0;
 
 private:
   static double calculateDelta(const HSLAPixel & p1, const HSLAPixel & p2);  
