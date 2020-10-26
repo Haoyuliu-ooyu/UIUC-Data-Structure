@@ -326,6 +326,24 @@ class BTree
                   unsigned int order) const;
 };
 
+
+template <class T, class C>
+size_t insertion_idx_(const std::vector<T>& elements, unsigned start, unsigned end, const C& val)
+{
+    /* TODO Your code goes here! */
+    unsigned mid = (start+end)/2;
+    if (end - start == 0) {
+        if (val > elements[end]) {
+            end++;
+        }
+        return end;
+    } else if (elements[mid] > val) {
+        return insertion_idx_(elements, 0, mid, val);
+    } else if (elements[mid] < val) {
+        return insertion_idx_(elements, mid + 1, end, val);
+    }
+    return mid;
+}
 /**
  * Generalized function for finding the insertion index of a given element
  * into a given sorted vector.
@@ -343,8 +361,15 @@ size_t insertion_idx(const std::vector<T>& elements, const C& val)
 {
     /* TODO Your code goes here! */
 
-    return 5;
+    if (elements.size() == 0) {
+       return 0;
+    }
+    return insertion_idx_(elements, 0, elements.size() - 1, val);
 }
+
+
+
+
 
 #include "btree_given.cpp"
 #include "btree.cpp"
