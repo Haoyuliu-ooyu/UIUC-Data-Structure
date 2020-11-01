@@ -54,6 +54,13 @@ void SCHashTable<K, V>::insert(K const& key, V const& value)
      * @todo Implement this function.
      *
      */
+    elems++;
+    if (shouldResize()) {
+        resizeTable();
+    }
+    unsigned int h = hashes::hash(key, size);
+    table[h].push_front(std::make_pair(key, value));
+    
 }
 
 template <class K, class V>
@@ -66,7 +73,16 @@ void SCHashTable<K, V>::remove(K const& key)
      * Please read the note in the lab spec about list iterators and the
      * erase() function on std::list!
      */
-    (void) key; // prevent warnings... When you implement this function, remove this line.
+    elems--;
+    unsigned int h = hashes::hash(key, size);
+    for (it = table[h].begin(); it != table[h].end(); it++) {
+        if (it->first == key) {
+            table[h].erase(it);
+            break;
+        }
+    }
+    
+    //(void) key; // prevent warnings... When you implement this function, remove this line.
 }
 
 template <class K, class V>
@@ -76,7 +92,13 @@ V SCHashTable<K, V>::find(K const& key) const
     /**
      * @todo: Implement this function.
      */
-
+    unsigned int h = hashes::hash(key, size);
+    typename std::list<std::pair<K, V>>::iterator it;
+    for (it = table[h].begin(); it != table[h].end(); it++) {
+        if (it->first == key) {
+            return it->second;
+        }
+    }
     return V();
 }
 
@@ -134,4 +156,17 @@ void SCHashTable<K, V>::resizeTable()
      *
      * @hint Use findPrime()!
      */
+    size_t new_s = findPrime(size*2);
+    std::list<std::pair<K,V>>* new_table = new std::list<std::pair<K,V>>[new_s];
+    //std::list<std::pair<K,V>>* temp = table;
+    for (unsigned int i = 0; i < size; i++) {
+        for (it = table[i].begin(); it != table[i].end(); it++) {
+            unsigned int h = hashes::hash(it->first, new_s);
+            new_table[h].push_front(*it);
+        }
+    }
+    size = new_s;
+    delete[] table;
+    table = new_table;
+    //delete[] temp;
 }

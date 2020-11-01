@@ -80,9 +80,28 @@ void DHHashTable<K, V>::insert(K const& key, V const& value)
      *  0.7). **Do this check *after* increasing elems!!** Also, don't
      *  forget to mark the cell for probing with should_probe!
      */
+    elems++;
+    if (shouldResize()) {
+        resizeTable();
+    }
+    size_t h = hashes::hash(key, size);
+    size_t jump = hashes::secondary_hash(key, size);
+    size_t i = 0;
+    size_t idx = h;
+    while (should_probe[idx]) {
+        ++i;
+        idx = (h + jump*i) % size;
+    }
+    if (table[idx] == NULL) {
+        table[idx] = new std::pair<K, V>(key, value);
+    } else {
+        table[idx]->first = key;
+        table[idx]->second = value;
+    }
+    should_probe[idx] = true;
 
-    (void) key;   // prevent warnings... When you implement this function, remove this line.
-    (void) value; // prevent warnings... When you implement this function, remove this line.
+    //(void) key;   // prevent warnings... When you implement this function, remove this line.
+    //(void) value; // prevent warnings... When you implement this function, remove this line.
 }
 
 template <class K, class V>
@@ -91,6 +110,10 @@ void DHHashTable<K, V>::remove(K const& key)
     /**
      * @todo Implement this function
      */
+    if (!keyExists(key)) {
+        return;
+    }
+    should_probe[findIndex(key)] = false;
 }
 
 template <class K, class V>
@@ -99,6 +122,23 @@ int DHHashTable<K, V>::findIndex(const K& key) const
     /**
      * @todo Implement this function
      */
+    size_t h = hashes::hash(key, size);
+    size_t jump = hashes::secondary_hash(key, size);
+    size_t i = 0;
+    size_t idx = h;
+    if (should_probe[idx] && table[idx]->first == key) {
+        return idx;
+    }
+    while (true) {
+        if (should_probe[idx] && table[idx]->first == key) {
+            return idx;
+        }
+        ++i;
+        idx = (idx + jump*i)%size;
+        if (idx == h) {
+            return -1;
+        }
+    }
     return -1;
 }
 
