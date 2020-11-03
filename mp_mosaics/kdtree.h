@@ -168,6 +168,8 @@ class KDTree
      */
     KDTree const &operator=(const KDTree<Dim>& rhs);
 
+    
+
     /**
      * Destructor for KDTree.
      */
@@ -259,6 +261,11 @@ class KDTree
     /**
      * @todo Add your helper functions here.
      */
+    void quickSelect(vector<Point<Dim>>& list, int start, int end, int p, int dimension);
+    typename KDTree<Dim>::KDTreeNode* helper(vector<Point<Dim>>& list, int start, int end, int currDim);
+    void destroy(KDTreeNode*);
+    void copy(KDTreeNode*, KDTreeNode*);
+    Point<Dim> findNearestNeighbor(const Point<Dim>& query, typename KDTree<Dim>::KDTreeNode* curr, int dimension) const;
 };
 
 #include "kdtree.hpp"
