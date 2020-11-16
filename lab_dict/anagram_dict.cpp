@@ -23,6 +23,15 @@ using std::ifstream;
 AnagramDict::AnagramDict(const string& filename)
 {
     /* Your code goes here! */
+    ifstream file(filename);
+    string word;
+    if (file.is_open()) {
+        while (getline(file, word)) {
+            string key = word;
+            sort(key.begin(), key.end());
+            dict[key].push_back(word);
+        }
+    }
 }
 
 /**
@@ -32,6 +41,11 @@ AnagramDict::AnagramDict(const string& filename)
 AnagramDict::AnagramDict(const vector<string>& words)
 {
     /* Your code goes here! */
+    for (auto word: words) {
+        string key = word;
+        sort(key.begin(), key.end());
+        dict[key].push_back(word);
+    }
 }
 
 /**
@@ -43,17 +57,29 @@ AnagramDict::AnagramDict(const vector<string>& words)
 vector<string> AnagramDict::get_anagrams(const string& word) const
 {
     /* Your code goes here! */
-    return vector<string>();
+    string key = word;
+    sort(key.begin(), key.end());
+    auto itr = dict.find(key);
+    if (itr == dict.end()) {
+        return vector<string>{};
+    }
+    return itr->second;
 }
 
 /**
  * @return A vector of vectors of strings. Each inner vector contains
- * the "anagram siblings", i.e. words that are anagrams of one another.
+ * the "anagram siblings", i.i = 0; i < wore. words that are anagrams of one another.
  * NOTE: It is impossible to have one of these vectors have less than
  * two elements, i.e. words with no anagrams are ommitted.
  */
 vector<vector<string>> AnagramDict::get_all_anagrams() const
 {
     /* Your code goes here! */
-    return vector<vector<string>>();
+    vector<vector<string>> anagrams;
+    for (auto pair : dict) {
+        if (pair.second.size() > 1) {
+            anagrams.push_back(pair.second);
+        }
+    }
+    return anagrams;
 }
