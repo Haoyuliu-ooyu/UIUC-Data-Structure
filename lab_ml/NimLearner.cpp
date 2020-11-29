@@ -60,6 +60,17 @@ NimLearner::NimLearner(unsigned startingTokens) : g_(true, true) {
 std::vector<Edge> NimLearner::playRandomGame() const {
   vector<Edge> path;
  /* Your code goes here! */
+ Vertex curr = startingVertex_;
+ while (curr != "p1-0" && curr != "p2-0") {
+   vector<Vertex> adj = g_.getAdjacent(curr);
+   if (adj.size() == 1 || rand() % 2) {
+     path.push_back(Edge(curr, adj[0]));
+     curr = adj[0];
+   } else {
+     path.push_back(Edge(curr, adj[1]));
+     curr = adj[1];
+   }
+ }
   return path;
 }
 
@@ -81,6 +92,25 @@ std::vector<Edge> NimLearner::playRandomGame() const {
  */
 void NimLearner::updateEdgeWeights(const std::vector<Edge> & path) {
  /* Your code goes here! */
+ bool p1win = false;
+ if (path.back().dest[1] == *"2") {
+   p1win = true;
+ }
+ for (Edge e : path) {
+   if (p1win) {
+     if (e.source[1] == *"1") {
+       g_.setEdgeWeight(e.source, e.dest, g_.getEdgeWeight(e.source, e.dest) + 1);
+     } else {
+       g_.setEdgeWeight(e.source, e.dest, g_.getEdgeWeight(e.source, e.dest) - 1);
+     }
+   } else {
+     if (e.source[1] == *"2") {
+       g_.setEdgeWeight(e.source, e.dest, g_.getEdgeWeight(e.source, e.dest) + 1);
+     } else {
+       g_.setEdgeWeight(e.source, e.dest, g_.getEdgeWeight(e.source, e.dest) - 1);
+     }
+   }
+ }
  
 }
 
