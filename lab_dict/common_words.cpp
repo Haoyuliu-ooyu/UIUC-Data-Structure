@@ -66,7 +66,7 @@ void CommonWords::init_common()
         for (auto elem: m) {
             map<string, unsigned int>::iterator i = common.find(elem.first);
             if (i != common.end()) {
-                common[elem.first] += 1;
+                i->second += 1;
             } else {
                 common[elem.first] = 1;
             }
